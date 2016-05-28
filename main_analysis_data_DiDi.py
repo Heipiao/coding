@@ -17,7 +17,7 @@ import numpy as np
 import pandas as pd
 
 ## import local lib
-from analysis_traffic_data import contain_bad_sheet_dir
+from analysis_data import contain_bad_sheet_dir
 
 
 DATA_DIR = "../season_1_sad/" # only change this dir to change the operate dir
@@ -84,14 +84,48 @@ def is_weather_data_contain_miss_time_sheet():
     else:
         False
 
+##############################################################################
+###################### analysis order data here ##########################
+def is_order_data_contain_miss_time_sheet():
+    print("missing time information in order data: date [missed time slice]")
+    order_data_dir = os.path.join(DATA_DIR, CONCRETE_DIR, ORDER_SHEET_DIR)
+    # judge whether it has repeat time sheet or not
+    miss_dates = contain_bad_sheet_dir(order_data_dir, judge_what = "is_miss_time")
+    if miss_dates:
+        return miss_dates
+    else:
+        False
+
+def is_order_data_contain_miss_district_sheet():
+    print("missing time information in order data: date [missed district]")
+    order_data_dir = os.path.join(DATA_DIR, CONCRETE_DIR, ORDER_SHEET_DIR)
+    # judge whether it has repeat time sheet or not
+    miss_dates = contain_bad_sheet_dir(order_data_dir, judge_what = "is_miss_district")
+    if miss_dates:
+        return miss_dates
+    else:
+        False 
 
 if __name__ == '__main__':
     ##################### analysis traffic data #############################
-    res = is_traffic_data_contain_miss_time_sheet()
-    for k, v in res.items():
-        print(k, v)
+    # res = is_traffic_data_contain_miss_time_sheet()
+    # for k, v in res.items():
+    #     print(k, v)
 
-    ##################### analysis traffic data #############################
+    ##################### analysis weather data #############################
     # res = is_weather_data_contain_miss_time_sheet()
     # for k, v in res.items():
     #      print(k, v)
+
+    ##################### analysis order data #############################
+    res = is_order_data_contain_miss_time_sheet()
+    # for k, v in res.items():
+    #     for missed_dis, missed_time_slices in v.items():
+    #         print(missed_dis, len(missed_time_slices))
+    from plot_order_data import plot_missed_time_slice
+    plot_missed_time_slice(res)
+
+    #### After analysising, the order does not have any missed district
+    # missed_district = is_order_data_contain_miss_district_sheet()
+    # for k, v in missed_district.items():
+    #     print(k, v)

@@ -83,6 +83,7 @@ def district_hash_map(data_frame):
     district_map_f_path = os.path.join(DATA_DIR, CONCRETE_DIR, CLUSTER_MAP_SHEET_DIR, 
                                         district_map_f)
     if not os.path.exists(district_map_f_path):
+        print("not existed, so we create one")
         create_hash_district_map_dict()
         # load the needed map file
     

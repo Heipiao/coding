@@ -80,22 +80,28 @@ def map_order_data_district_hash():
     # map the hash in traffic data
     district_hash_map_dir(order_data_dir)
 
-   
+def organize_order_data():
+    order_data_dir = os.path.join(DATA_DIR, CONCRETE_DIR, ORDER_SHEET_DIR)
+    # organize the traffic sheet
+    organize_data_sheet_dir(order_data_dir, according_to = ["start_district", "time_slices"])
+
+      
 
 
 if __name__ == '__main__':
     ######################## traffic data pre process ##################
-    map_traffic_data_district_hash()
-    organize_traffic_data()
+    # map_traffic_data_district_hash()
+    # organize_traffic_data()
 
-    ####################### weather data pre process ##################
-    process_weather_repeat_noise()
+    # ####################### weather data pre process ##################
+    # process_weather_repeat_noise()
     
-    ####################### poi data pre process ##################
-    map_poi_data_district_hash()
-    organize_poi_data()
+    # ####################### poi data pre process ##################
+    # map_poi_data_district_hash()
+    # organize_poi_data()
 
     ####################### order data pre process ######################
     ##
-    map all the district col in the order sheet to value
+    ## ap all the district col in the order sheet to value
     map_order_data_district_hash()
+    organize_order_data()

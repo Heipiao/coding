@@ -53,10 +53,13 @@ def what_time_missed(df_time):
         return None
 
 def is_miss_time_sheet(df):
-    try:
-        district = df["district"]
-    except KeyError:
-        # print("*******************")
+    if "district" in df.columns:
+        sheet_district = df.district
+    elif "start_district" in df.columns:
+        sheet_district = df.start_district
+    else:
+        ## this sheet does not contain district
+        # print("******* not district contained ************")
         current_time_slices = df.time_slices.unique()
         missed_time = what_time_missed(current_time_slices)
         if missed_time:
@@ -65,8 +68,8 @@ def is_miss_time_sheet(df):
             return None
     # key is the contain miss time district, value is what time missed
     miss_time_district = OrderedDict()
-    for d in df.district.unique():
-        district_time = df[df.district == d].time_slices
+    for d in sheet_district.unique():
+        district_time = df[sheet_district == d].time_slices
         # if there is a miss item slice
         if district_time.unique().shape[0] < 144:
             miss_time_district[d] = what_time_missed(district_time.unique())
@@ -78,9 +81,15 @@ def is_miss_time_sheet(df):
 
 
 def is_miss_district_sheet(df):
+    print("analysising whether missing district......")
     miss_district = list(range(1, 67))
-    district_uni = df.district.unique()
-    if district_uni.shape[0] < 66:
+    if "district" in df.columns:
+        district_uni = df.district.unique()
+    elif "start_district" in df.columns:
+        district_uni = df.start_district.unique()
+
+    # print(district_uni.shape[0])
+    if district_uni.shape[0] <= 66:
         for d in district_uni:
             miss_district.remove(d)
     if miss_district:
@@ -107,6 +116,7 @@ def contain_bad_sheet_dir(needed_judge_dir, judge_what = "is_repeat_time"):
 
             judge_result = judge(df)
             dates[str(df.date.unique()[0])] = judge_result
+    dates = OrderedDict(sorted(dates.items(), key=lambda d:d[0]))
     return dates
             # change the file
 
