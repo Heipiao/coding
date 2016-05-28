@@ -81,7 +81,7 @@ def is_miss_time_sheet(df):
 
 
 def is_miss_district_sheet(df):
-    print("analysising whether missing district......")
+    print("analysising missing district......")
     miss_district = list(range(1, 67))
     if "district" in df.columns:
         district_uni = df.district.unique()

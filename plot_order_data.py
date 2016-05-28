@@ -7,9 +7,6 @@
 #
 # @Description: 
 
-import os
-
-
 ## import python`s own lib
 import os 
 
@@ -35,6 +32,8 @@ ORDER_SHEET_DIR = "order_data"
 def plot_missed_time_slice(missed_sta):
     plot_saved_dir = os.path.join(DATA_DIR, CONCRETE_DIR, ORDER_SHEET_DIR, 
                                     "plot_missed_time_slice")
+    if not os.path.exists(plot_saved_dir):
+        os.mkdir(plot_saved_dir)
     x = range(1, 67)
     xmajorLocator = MultipleLocator(10) #将x主刻度标签设置为10的倍数
     xmajorFormatter = FormatStrFormatter('%d') #设置x轴标签文本的格式 
@@ -56,13 +55,18 @@ def plot_missed_time_slice(missed_sta):
         ax.set_ylabel("missed time slices count")
         
         detail = "plot_district_slices"
-        plt.savefig(os.path.join(plot_saved_dir, detail,  str(k) + ".png"))
+        save_plot_dir = os.path.join(plot_saved_dir, detail)
+        if not os.path.exists(save_plot_dir):
+            os.mkdir(save_plot_dir)
+        plt.savefig(os.path.join(save_plot_dir,  str(k) + ".png"))
         plt.close()
 
 
 def plot_missed_time_slice_district(missed_sta):
     plot_saved_dir = os.path.join(DATA_DIR, CONCRETE_DIR, ORDER_SHEET_DIR, 
                                 "plot_missed_time_slice")
+    if not os.path.exists(plot_saved_dir):
+        os.mkdir(plot_saved_dir)
     x = range(1, 22)
     xmajorLocator = MultipleLocator(1) #将x主刻度标签设置为10的倍数
     dates = list()
@@ -90,5 +94,8 @@ def plot_missed_time_slice_district(missed_sta):
         ax.set_ylabel("missed time slices count")
         
         detail = "plot_date_district"
-        plt.savefig(os.path.join(plot_saved_dir, detail, "district_" + str(i) + ".png"))
+        save_plot_dir = os.path.join(plot_saved_dir, detail)
+        if not os.path.exists(save_plot_dir):
+            os.mkdir(save_plot_dir)
+        plt.savefig(os.path.join(save_plot_dir, "district_" + str(i) + ".png"))
         plt.close()
