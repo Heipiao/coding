@@ -90,15 +90,15 @@ def organize_order_data():
 
 if __name__ == '__main__':
     ######################## traffic data pre process ##################
-    # map_traffic_data_district_hash()
-    # organize_traffic_data()
+    map_traffic_data_district_hash()
+    organize_traffic_data()
 
-    # ####################### weather data pre process ##################
-    # process_weather_repeat_noise()
+    ####################### weather data pre process ##################
+    #process_weather_repeat_noise()
     
-    # ####################### poi data pre process ##################
-    # map_poi_data_district_hash()
-    # organize_poi_data()
+    ####################### poi data pre process ##################
+    map_poi_data_district_hash()
+    organize_poi_data()
 
     ####################### order data pre process ######################
     ##
