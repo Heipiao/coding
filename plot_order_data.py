@@ -7,9 +7,6 @@
 #
 # @Description: 
 
-import os
-
-
 ## import python`s own lib
 import os 
 
@@ -35,6 +32,8 @@ ORDER_SHEET_DIR = "order_data"
 def plot_missed_time_slice(missed_sta):
     plot_saved_dir = os.path.join(DATA_DIR, CONCRETE_DIR, ORDER_SHEET_DIR, 
                                     "plot_missed_time_slice")
+    if not os.path.exists(plot_saved_dir):
+        os.mkdir(plot_saved_dir)
     x = range(1, 67)
     xmajorLocator = MultipleLocator(10) #将x主刻度标签设置为10的倍数
     xmajorFormatter = FormatStrFormatter('%d') #设置x轴标签文本的格式 
@@ -51,13 +50,52 @@ def plot_missed_time_slice(missed_sta):
         ax.xaxis.set_major_locator(xmajorLocator)
         ax.xaxis.set_minor_locator(xminorLocator)
         ax.xaxis.set_minor_formatter(xmajorFormatter)
-        ax.xaxis.grid(True, which='minor') #x坐标轴的网格使用主刻度
+        ax.xaxis.grid(True, which='minor') #x坐标轴的网格使用次刻度
         ax.set_xlim(0, 66)
         ax.set_ylabel("missed time slices count")
         
-        plt.savefig(os.path.join(plot_saved_dir, str(k) + ".png"))
+        detail = "plot_district_slices"
+        save_plot_dir = os.path.join(plot_saved_dir, detail)
+        if not os.path.exists(save_plot_dir):
+            os.mkdir(save_plot_dir)
+        plt.savefig(os.path.join(save_plot_dir,  str(k) + ".png"))
         plt.close()
 
 
+def plot_missed_time_slice_district(missed_sta):
+    plot_saved_dir = os.path.join(DATA_DIR, CONCRETE_DIR, ORDER_SHEET_DIR, 
+                                "plot_missed_time_slice")
+    if not os.path.exists(plot_saved_dir):
+        os.mkdir(plot_saved_dir)
+    x = range(1, 22)
+    xmajorLocator = MultipleLocator(1) #将x主刻度标签设置为10的倍数
+    dates = list()
+    for k, v in missed_sta.items():
+        dates.append(k)
+    print(dates)
 
+    for i in range(1, 67):        
+        y = list()
+        for k in dates:
+            if i in missed_sta[k].keys():
+                y.append(len(missed_sta[k][i]))
+            else:
+                y.append(0)
 
+        # print(len(y))
+        plt.scatter(x, y)
+        ax = plt.gca()
+        ax.set_title("district: " + str(i) + " time slices missed ")
+        ax.set_xlabel("date")
+        ax.xaxis.set_major_locator(xmajorLocator)
+        ax.xaxis.grid(True, which='major') #x坐标轴的网格使用主刻度
+        ax.set_xlim(0, 22)
+        #ax.set_xticklabels(dates)
+        ax.set_ylabel("missed time slices count")
+        
+        detail = "plot_date_district"
+        save_plot_dir = os.path.join(plot_saved_dir, detail)
+        if not os.path.exists(save_plot_dir):
+            os.mkdir(save_plot_dir)
+        plt.savefig(os.path.join(save_plot_dir, "district_" + str(i) + ".png"))
+        plt.close()
