@@ -122,9 +122,9 @@ if __name__ == '__main__':
     # for k, v in res.items():
     #     for missed_dis, missed_time_slices in v.items():
     #         print(missed_dis, len(missed_time_slices))
-    from plot_order_data import plot_missed_time_slice
-    plot_missed_time_slice(res)
-
+    from plot_order_data import plot_missed_time_slice, plot_missed_time_slice_district
+    #plot_missed_time_slice(res)
+    plot_missed_time_slice_district(res)
     #### After analysising, the order does not have any missed district
     # missed_district = is_order_data_contain_miss_district_sheet()
     # for k, v in missed_district.items():
